@@ -1,0 +1,37 @@
+Conecting to ATMEGA8L with avrdude(1)
+uftdi0 at uhub2
+ucom0 at uftdi0 port 1
+
+# Make a.out
+$ ./makeit
+
+# Create hex file from a.out
+$(OBJCOPY) -O $(FORMAT) -R .eeprom $< $@
+avr-objcopy -O ihex -R .eeprom a.out a.hex
+
+# Erase chip.
+$ sudo avrdude -p m8 -c stk500v2 -P /dev/ttyU0 -y -e
+
+# Update flash memory.
+$ sudo avrdude -p m8 -c stk500v2 -P /dev/ttyU0 -U flash:w:a.hex
+
+# Connect to robot using avrdue interactive mode.
+$ sudo avrdude -p m8 -t -c stk500v2 -P /dev/ttyU0
+
+
+
+MAN PAGES
+avr-as(1)       => AVR Assembler
+avr-gcc(1)      => AVR C Compiler
+avr-g++(1)      => AVR C++ Compiler
+avr-gdb(1)      => AVR Debugger
+avr-objdump(1)  =>
+avr-objcopy(1)  =>
+
+avrdude(1)  => AVR Programer
+
+
+/usr/local/share/doc/avr-libc/examples
+/usr/local/libexec/gcc/avr/3.4.5
+/usr/local/avr/{bin,include,lib}
+
